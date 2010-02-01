@@ -1,0 +1,88 @@
+\documentclass[12pt]{article}
+\usepackage{sbc-template}
+\usepackage{graphicx,url}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{scalefnt}
+\usepackage{soul}
+\sloppy
+
+\title{Borboleta and SaguiSaúde - Open Souce Mobile Telehealth for Public Home Healthcare}
+
+\author{Gustavo Luiz Duarte, Rafael Correia, Pedro Leal, Helves Domingues, \\
+		Fabio Kon, Rubens Kon, João Eduardo Ferreira}
+
+\address{
+        Departamento de Ciência da Computação, Instituto de Matemática e Estatística\\
+    Universidade de São Paulo
+    \email{\{gduarte, rafaeljpc, pedrombl, hhdomingues, kon, rkon, jef\}@ime.usp.br}
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+   	Healthcare Centers play a major role in the Brazilian public healthcare system
+	Healthcare Centers play a major role in the Brazilian public healthcare system
+	Healthcare Centers play a major role in the Brazilian public healthcare system
+	Healthcare Centers play a major role in the Brazilian public healthcare system
+	Healthcare Centers play a major role in the Brazilian public healthcare system
+	Healthcare Centers play a major role in the Brazilian public healthcare system
+\end{abstract}
+
+\section{Introduction}
+
+Healthcare Centers play a major role in the Brazilian public healthcare system
+as they are responsible for the primary care in their geographic region.
+Governmental initiatives such as the Family Health Program have produced outstanding
+results in the improvement of health indexes by focusing on preventive medicine. In
+these programs, health professionals and specially-trained community agents visit
+the homes of patients (mostly in low-income, unfavored neighborhoods) to provide
+health services. However, at the current stage, these actions are carried out with
+almost no support from Information Technology. All the data is hand-written in forms
+that are stored in piles of thousands of pieces of paper that are hardly ever used for any
+significant health action or study.
+
+The Borboleta project conducted by the University of São Paulo, Brazil, aims at developing
+a mobile Open Source Integrated System for management of health information in the context
+of public healthcare centers and home healthcare service. The hypothesis we want to verify
+is that automating data collection and processing can improve significantly the quality
+of the service provided to the population. To achieve that objective, the system we are
+developing includes a multimedia electronic health record (EHR), which stores patient personal
+and health data, including treatment history. The mobile EHR improves the quality of the health
+service, facilitating access to patient health information and guaranteeing that less data is lost due
+to hand-written records that are not processed. It will also help to identify the evolution of diseases
+as the health information database is linked to temporal and geographical information.
+
+The system is composed of two major parts: Borboleta, that runs on smartphones with the Java LWUIT
+technology and SaguiSaúde that runs on the Healthcare center and is accessed by health professionals
+via commodity Web browsers.
+
+The system manages patient personal and socioeconomic data, health appointment
+scheduling and description, drug prescriptions, lab exams, and health professional
+information. All this data is stored in a PostgreSQL database that is managed by health
+professionals via a user-friendly Web interface implemented using the Raby on Rails technology.
+
+The Borboleta module that runs on smartphones carry a subset of the information stored in the central database.
+This subset is defined based on the homes that will be visited in that particular day. At the patient home,
+the health professional has no network access but can consult and update the health records freely;
+synchronization is delayed until the smartphone has Wi-Fi access, which happens when the health professional
+goes back to the Health Center in the end of the day. A two-way synchronization protocol based on REST
+(Resource State Transfer) over HTTP is used to exchange information among the mobile and fixed parts of the system.
+
+The software is developed using a methodology based on Agile Methods in which preliminary versions of the system
+are tested by real doctors and nurses monthly and several releases are produced each year. Although SaguiSaúde
+and Borboleta are not yet in production, some of their modules are already usable and tests are being conducted
+with a 120,000 people database from the University Healthcare center. The system is available as open source
+software and can be downloaded with a BSD license from http://ccsl.ime.usp.br/borboleta .
+
+
+
+
+\bibliographystyle{sbcbib}
+\bibliography{medetel}
+
+\end{document}
