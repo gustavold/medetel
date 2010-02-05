@@ -44,13 +44,67 @@ The Borboleta project conducted by the University of São Paulo, Brazil, aims at
 \section{System architecture}
 % abordagem, proposta
 %TODO: nao colocar detalhes de implementação aqui (java lwuit)
-The system is composed of two major parts: Borboleta, that runs on smartphones with the Java LWUIT technology and SaguiSaúde that runs on the Healthcare center and is accessed by health professionals via commodity Web browsers.
+The system is composed of two major parts: Borboleta, that runs on smartphones, and SaguiSaúde, that runs on the Healthcare center. During home attendance, health professionals visit patients carrying smartphones with Borboleta to store collected information. SaguiSaúde is responsible for centralizing health information of all attended patients and making it easily available for health professionals. SaguiSaúde is used as a support system for all activities regarding patients in the Healthcare center. Developing such a complex system that is easy to use is a challenging effort.
+
 
 \subsection{Server}
-%% Sagui
-The system manages patient personal and socioeconomic data, health appointment scheduling and description, drug prescriptions, lab exams, and health professional information 
-%TODO: encaixar direito a referencia
-\cite{sagui}. All this data is stored in a PostgreSQL database that is managed by health professionals via a user-friendly Web interface implemented using the Ruby on Rails technology.
+%% Sagui 
+SaguiSaúde was developed as a Web system using Ruby on Rails framework and is accessed by health professionals via commodity Web browsers. The system manages patient personal and socioeconomic data, health appointment scheduling and description, drug prescriptions, lab exams, and health professional information. Figure \ref{dataModel} presents the conceptual model of the system.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=.60\textwidth]{images/ModeloConceitualSagui.jpg}
+\caption{Conceptual model}
+\label{dataModel}
+\end{figure}
+
+
+This diagram shows clearly the focus of the Healthcare center activities and SaguiSaúde: the Health Appointment. By appointment we mean all occasions in which patient and health professional meet each other, be it in the patient's home due to a routine visit, or be it in the Healthcare center. The requirement elicitation and analysis performed to reach this conceptual model is described in details in \cite{sagui}.
+
+Flexibility in the evolution of the system is mandatory. New features and changes in the existing ones, are frequent. Changes of requirements and new demands from government agencies are common in a Healthcare center. 
+
+
+
+Administration
+
+One major concern during the development of a health system is security. SaguiSaúde manages sensitive data, and needs to assure that only permitted users will have access to data. To achieve this, the system has a role based access control module that gives the administrator the ability to manage users and what data each user has access.
+% auditoria
+
+
+SaguiSaúde is composed of 3 main modules: cadastro de pacientes, administration, e encontros.
+
+cadastro de pacientes armazenas dados pessoais e dados socioeconomicos.
+o modulo de administraçao gerencia os campos desses formularios, os usuários do sistema, e outros dados como cadastros de exames, ruas, etc.
+
+A motivaçao do desenvolvimento do sagui era automatizar a coleta e armazenamento dos dados de saúde do cseb e facilitar os procedimentos utilizados pelos profissionais de saúde. 
+
+Para antender as necessidades do centro de saude, os desenvolvedores participaram junto com os profissionais de saude na especificacao do sistema. Foi desenvolvido utilizando xp (prototipos).
+
+
+Um bom modelo de dados se faz necessário pois vamos ter uma porrada de registros. O número de usuários do cseb hoje passa de 170 mil. O modelo de dados do SaguiSaúde é apresentado na figura a seguir.
+
+
+
+Health systems use to have complex data models. There is many research in this field, for example the HL7 standard.  
+
+
+All this data is stored in a PostgreSQL database that is managed by health professionals via a user-friendly Web interface implemented using the Ruby on Rails technology.
+
+
+
+- complexidade do modelo (HL7)
+- tipos de dados (cadastro de pacientes, exame, agendamento, medicamentos, etc.)
+- foco no encontro (histórico)
+- necessidade de administração
+- flexibilidade na administração dos tipos de dados (tabelas de apoio)
+- segurança (audição, usuários)
+- tecnologias utilizadas (rails, postgres, ...)
+
+
+
+
+
+
 
 \subsection{Mobile}
 %% Borboleta
