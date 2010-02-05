@@ -104,13 +104,25 @@ All this data is stored in a PostgreSQL database that is managed by health profe
 
 
 
-
-
 \subsection{Mobile}
 %% Borboleta
-The Borboleta module 
-%TODO: encaixar direito a referencia
-\cite{borboleta} that runs on smartphones carry a subset of the information stored in the central database. This subset is defined based on the homes that will be visited in that particular day. At the patient home, the health professional has no network access but can consult and update the health records freely; synchronization is delayed until the smartphone has Wi-Fi access, which happens when the health professional goes back to the Health Center in the end of the day. 
+The Borboleta module \cite{correia08} aim to be a mobile Eletronic Health Record system, which runs on smartphones
+and PDAs, changing the paper forms that was used before. So the health care providers will gain mobility, because a
+mobile device is smaller than a bunch of paper forms, and agility, as the system is optimized to not need so much
+typing on the inputs.
+
+The module carry a subset of the information stored in the central database. This subset is defined based on the
+homes that will be visited in that particular day, then the data is transfered to the mobile system through the
+Wi-Fi network at the Healthcare Center. From this step the Borboleta works disconnected from the server module.
+At the patient home, the health professional has no network access, for this reason we made the mobile modules
+without a network connection, so they can freely see and update the patient data. At the end of the day, health
+professionals goes back to the Health Center and synchronize the collected data.
+
+Another aspect that we focus our work is interface of the system. To better fit to the healthcare providers needs
+the interface must legible and easy to collect. As long as we developed the system under JavaME technology,
+we could use the default interface toolkit, known as LCDUI, but this toolkit does not have all the requirements
+to fit our needs, so we look after another interface framework and found the LWUIT, which has a better look and
+much more interesting component.
 
 \subsection{Synchronizing}
 %Sincronização
