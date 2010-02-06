@@ -43,8 +43,7 @@ The Borboleta project conducted by the University of São Paulo, Brazil, aims at
 
 \section{System architecture}
 % abordagem, proposta
-%TODO: nao colocar detalhes de implementação aqui (java lwuit)
-The system is composed of two major parts: Borboleta, that runs on smartphones, and SaguiSaúde, that runs on the Healthcare center. During home attendance, health professionals visit patients carrying smartphones with Borboleta to store collected information. SaguiSaúde is responsible for centralizing health information of all attended patients and making it easily available for health professionals. SaguiSaúde is used as a support system for all activities regarding patients in the Healthcare center. Developing such a complex system that is easy to use is a challenging effort.
+The system is composed of two major parts: Borboleta, that runs on smartphones, and SaguiSaúde, that runs on the Healthcare center. During homecare, health professionals visit patients carrying smartphones with Borboleta to store collected information. SaguiSaúde is responsible for centralizing health information of all attended patients and making it easily available for health professionals. SaguiSaúde is used as a support system for all activities regarding patients in the Healthcare center. Developing such a complex system that is easy to use is a challenging effort.
 
 
 \subsection{Server}
@@ -106,28 +105,20 @@ All this data is stored in a PostgreSQL database that is managed by health profe
 
 \subsection{Mobile}
 %% Borboleta
-The Borboleta module \cite{correia08} aim to be a mobile Eletronic Health Record system, which runs on smartphones
-and PDAs, changing the paper forms that was used before. So the health care providers will gain mobility, because a
-mobile device is smaller than a bunch of paper forms, and agility, as the system is optimized to not need so much
-typing on the inputs.
+The Borboleta module \cite{correia08} aim to be a mobile Eletronic Health Record system, which runs on smartphones and PDAs, changing the paper forms that was used before. So the health care providers will gain mobility, because a mobile device is smaller than a bunch of paper forms, and agility, as the system is optimized to not need so much typing on the inputs.
 
-The module carry a subset of the information stored in the central database. This subset is defined based on the
-homes that will be visited in that particular day, then the data is transfered to the mobile system through the
-Wi-Fi network at the Healthcare Center. From this step the Borboleta works disconnected from the server module.
-At the patient home, the health professional has no network access, for this reason we made the mobile modules
-without a network connection, so they can freely see and update the patient data. At the end of the day, health
-professionals goes back to the Health Center and synchronize the collected data.
+The module carry a subset of the information stored in the central database. This subset is defined based on the homes that will be visited in that particular day, then the data is transfered to the mobile system through the Wi-Fi network at the Healthcare Center. From this step the Borboleta works disconnected from the server module. At the patient home, the health professional has no network access, for this reason we made the mobile modules without a network connection, so they can freely see and update the patient data. At the end of the day, health professionals goes back to the Health Center and synchronize the collected data.
 
-Another aspect that we focus our work is interface of the system. To better fit to the healthcare providers needs
-the interface must legible and easy to collect. As long as we developed the system under JavaME technology,
-we could use the default interface toolkit, known as LCDUI, but this toolkit does not have all the requirements
-to fit our needs, so we look after another interface framework and found the LWUIT, which has a better look and
-much more interesting component.
+Another aspect that we focus our work is interface of the system. To better fit to the healthcare providers needs the interface must legible and easy to collect. As long as we developed the system under JavaME technology, we could use the default interface toolkit, known as LCDUI, but this toolkit does not have all the requirements to fit our needs, so we look after another interface framework and found the LWUIT, which has a better look and much more interesting component.
 
 \subsection{Synchronizing}
 %Sincronização
-A two-way synchronization protocol based on REST (Resource State Transfer) over HTTP is used to exchange information among the mobile and fixed parts of the system.
 
+The synchronizing process is composed of 3 phases: replication, evolution, and reconciliation. In the replication phase, selected records are replicated to mobile device, and, when applicable, data locks are applied. Data locks are meant to avoid data conflicts when a record can be updated in more than one device while replicated. Another approach is to tolerate data conflicts and handling with it during reconciliation, resolving automatically or with human support. In the current state of the system, it is assumed there will be no data conflict. We assure this by replicating records as disjoint sets between mobile devices and reconciling it right after patients visits. The evolution phase is when local updates are applied to the mobile database, during homecare. In the reconciliation phase, updates are propagated from mobile to central database, making collected data globally available in the system. 
+
+During the development of Borboleta and SaguiSaúde we realized that it is unnatural to maintain the same model for the mobile and central databases. Having different, or heterogeneous, data models decouples the development of both systems. However, synchronizing heterogeneous databases implies the addition of another step in the replication and reconciliation phases: data transformation. In [3] we explore in details the motivation and different possible approaches to heterogeneous database synchronization. We've implemented it as a module of SaguiSaúde using Ruby on Rails. It is the only piece of code that is aware of such heterogeneity. It is responsible for transforming data from central to mobile model during replication, and back to central model during reconciliation. To keep this transformation process flexible, the synchronization module is supplied with an external mapping description. Therefore, when one of these models is changed, we just need to change the mapping description, keeping the synchronization code untouched.
+
+Although mobile and central databases have different representations of the same information, they are not independent databases, we must keep the mobile model smaller than the central model in terms of handled information, i.e., every information modeled by the mobile database must be also modeled by the central database to be possible the synchronization. We've implemented the synchronization protocol based on REST (Resource State Transfer) over HTTP, representing data as XML documents. For the transformations descriptions we used XSLT (eXtensible Stylesheet Language for Transformations).
 
 
 
