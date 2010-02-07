@@ -25,12 +25,9 @@
 \maketitle
 
 \begin{abstract}
-   	Healthcare Centers play a major role in the Brazilian public healthcare system
-	Healthcare Centers play a major role in the Brazilian public healthcare system
-	Healthcare Centers play a major role in the Brazilian public healthcare system
-	Healthcare Centers play a major role in the Brazilian public healthcare system
-	Healthcare Centers play a major role in the Brazilian public healthcare system
-	Healthcare Centers play a major role in the Brazilian public healthcare system
+	
+In Brazil, Healthcare Centers (\emph{Centros de Saúde}) play the role of primary healthcare provider under the National Unified Health System (SUS). One of its activities that is proving effective is home care. Borboleta and SaguiSaúde constitute integrated systems intended to automate Healthcare Centers. It provides an Electronic Health Record system with a mobile module that runs on smartphones for supporting home care. As we can not count on internet connectivity in the patient's home, we describe a replication and synchronization process to provide offline data access.
+  
 \end{abstract}
 
 \section{Introduction}
@@ -43,7 +40,7 @@ The Borboleta project conducted by the University of São Paulo, Brazil, aims at
 
 \section{System architecture}
 % abordagem, proposta
-The system is composed of two major parts: Borboleta, that runs on smartphones, and SaguiSaúde, that runs on the Healthcare center. During homecare, health professionals visit patients carrying smartphones with Borboleta to store collected information. SaguiSaúde is responsible for centralizing health information of all attended patients and making it easily available for health professionals. SaguiSaúde is used as a support system for all activities regarding patients in the Healthcare center. Developing such a complex system that is easy to use is a challenging effort.
+The system is composed of two major parts: Borboleta, that runs on smartphones, and SaguiSaúde, that runs on the Healthcare center. During home care, health professionals visit patients carrying smartphones with Borboleta to store collected information. SaguiSaúde is responsible for centralizing health information of all attended patients and making it easily available to health professionals. SaguiSaúde is used as a support system for all activities regarding patients in the Healthcare Center. Developing such a complex system that is easy to use is a challenging effort.
 
 
 \subsection{Server}
@@ -58,50 +55,26 @@ SaguiSaúde was developed as a Web system using Ruby on Rails framework and is a
 \end{figure}
 
 
-This diagram shows clearly the focus of the Healthcare center activities and SaguiSaúde: the Health Appointment. By appointment we mean all occasions in which patient and health professional meet each other, be it in the patient's home due to a routine visit, or be it in the Healthcare center. The requirement elicitation and analysis performed to reach this conceptual model is described in details in \cite{sagui}.
+This diagram shows clearly the focus of the Healthcare Center activities and SaguiSaúde: the Health Appointment. By appointment we mean all occasions in which patient and health professional meet each other, be it in the patient's home due to a routine visit, or be it in the Healthcare center. The requirement elicitation and analysis performed to reach this conceptual model is described in details in \cite{sagui}.
 
-Flexibility in the evolution of the system is mandatory. New features and changes in the existing ones, are frequent. Changes of requirements and new demands from government agencies are common in a Healthcare center. 
+SaguiSaúde is composed of three main modules: users registry, health appointments, and administration.
+Users registry contains personal and socioeconomic data of users, that includes doctors, nurses, patients, and other Healthcare Center employees. Everyone is seen as a user in the system, then there is types of users to represent the semantics in a relationship between users, like a patient and a nurse in charge.Health appointments module contains scheduling and history of health appointments. One can search registers by patient's name, registration number, and/or date. A health appointment register contains notes from health professionals taken during a visit about patient's health situation, daily activities, environment, treatment, and illness evolution. We try to keep this data structured as much as possible, but wherever it is necessary we give to the health professional the opportunity to register stories in free text.
 
+The administration module can be divided in two parts: support data, and management. Support data comprises the set up of static data, including diseases, drugs, streets, religions, types of documents, education levels, etc.. We never couple these data with the code so that we can evolve the system just configuring it. There is a significant disagreement about the terminologies to be used. Making these data rigid would practically preclude the adaptation to another Healthcare Center. The other part of administration module comprises the management of users and access control. One major concern during the development of a health system is security. SaguiSaúde manages sensitive data, and needs to assure that only permitted users will have access to these data. To achieve this, the system has a role based access control module that gives the administrator the ability to manage users and what data each one has access.
 
+%Flexibility in the evolution of the system is mandatory. New features and changes in the existing ones, are frequent. Changes of requirements and new demands from government agencies are common in a Healthcare center. 
 
-Administration
+%Health systems use to have complex data models. There is many research in this field, for example the HL7 standard.  
 
-One major concern during the development of a health system is security. SaguiSaúde manages sensitive data, and needs to assure that only permitted users will have access to data. To achieve this, the system has a role based access control module that gives the administrator the ability to manage users and what data each user has access.
-% auditoria
+%All this data is stored in a PostgreSQL database that is managed by health professionals via a user-friendly Web interface implemented using the Ruby on Rails technology.
 
-
-SaguiSaúde is composed of 3 main modules: cadastro de pacientes, administration, e encontros.
-
-cadastro de pacientes armazenas dados pessoais e dados socioeconomicos.
-o modulo de administraçao gerencia os campos desses formularios, os usuários do sistema, e outros dados como cadastros de exames, ruas, etc.
-
-A motivaçao do desenvolvimento do sagui era automatizar a coleta e armazenamento dos dados de saúde do cseb e facilitar os procedimentos utilizados pelos profissionais de saúde. 
-
-Para antender as necessidades do centro de saude, os desenvolvedores participaram junto com os profissionais de saude na especificacao do sistema. Foi desenvolvido utilizando xp (prototipos).
-
-
-Um bom modelo de dados se faz necessário pois vamos ter uma porrada de registros. O número de usuários do cseb hoje passa de 170 mil. O modelo de dados do SaguiSaúde é apresentado na figura a seguir.
-
-
-
-Health systems use to have complex data models. There is many research in this field, for example the HL7 standard.  
-
-
-All this data is stored in a PostgreSQL database that is managed by health professionals via a user-friendly Web interface implemented using the Ruby on Rails technology.
-
-
-
-- complexidade do modelo (HL7)
-- tipos de dados (cadastro de pacientes, exame, agendamento, medicamentos, etc.)
-- foco no encontro (histórico)
-- necessidade de administração
-- flexibilidade na administração dos tipos de dados (tabelas de apoio)
-- segurança (audição, usuários)
-- tecnologias utilizadas (rails, postgres, ...)
-
-
-
-
+%- complexidade do modelo (HL7)
+%- tipos de dados (cadastro de pacientes, exame, agendamento, medicamentos, etc.)
+%- foco no encontro (histórico)
+%- necessidade de administração
+%- flexibilidade na administração dos tipos de dados (tabelas de apoio)
+%- segurança (audição, usuários)
+%- tecnologias utilizadas (rails, postgres, ...)
 
 \subsection{Mobile}
 %% Borboleta
@@ -114,7 +87,7 @@ Another aspect that we focus our work is interface of the system. To better fit 
 \subsection{Synchronizing}
 %Sincronização
 
-The synchronizing process is composed of 3 phases: replication, evolution, and reconciliation. In the replication phase, selected records are replicated to mobile device, and, when applicable, data locks are applied. Data locks are meant to avoid data conflicts when a record can be updated in more than one device while replicated. Another approach is to tolerate data conflicts and handling with it during reconciliation, resolving automatically or with human support. In the current state of the system, it is assumed there will be no data conflict. We assure this by replicating records as disjoint sets between mobile devices and reconciling it right after patients visits. The evolution phase is when local updates are applied to the mobile database, during homecare. In the reconciliation phase, updates are propagated from mobile to central database, making collected data globally available in the system. 
+The synchronizing process is composed of three phases: replication, evolution, and reconciliation. In the replication phase, selected records are replicated to mobile device, and, when applicable, data locks are applied. Data locks are meant to avoid data conflicts when a record can be updated in more than one device while replicated. Another approach is to tolerate data conflicts and handling with it during reconciliation, resolving automatically or with human support. In the current state of the system, it is assumed there will be no data conflict. We assure this by replicating records as disjoint sets between mobile devices and reconciling it right after patients visits. The evolution phase is when local updates are applied to the mobile database, during home care. In the reconciliation phase, updates are propagated from mobile to central database, making collected data globally available in the system. 
 
 During the development of Borboleta and SaguiSaúde we realized that it is unnatural to maintain the same model for the mobile and central databases. Having different, or heterogeneous, data models decouples the development of both systems. However, synchronizing heterogeneous databases implies the addition of another step in the replication and reconciliation phases: data transformation. In [3] we explore in details the motivation and different possible approaches to heterogeneous database synchronization. We've implemented it as a module of SaguiSaúde using Ruby on Rails. It is the only piece of code that is aware of such heterogeneity. It is responsible for transforming data from central to mobile model during replication, and back to central model during reconciliation. To keep this transformation process flexible, the synchronization module is supplied with an external mapping description. Therefore, when one of these models is changed, we just need to change the mapping description, keeping the synchronization code untouched.
 
